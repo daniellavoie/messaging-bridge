@@ -1,0 +1,32 @@
+---
+applications:
+- name: demo-2-bridge
+  instances: 1
+  no-route: true
+  path: demo-2/demo-2-bridge/target/demo-2-bridge-0.0.1-SNAPSHOT.jar
+  health-check-type: process
+  services: ["amqp"]
+  env: 
+    SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka.cf-demo.com
+    SPRING_CLOUD_STREAM_BINDINGS_MAINFRAME_BINDER: rabbit
+    SPRING_CLOUD_STREAM_BINDINGS_PAAS_BINDER: rabbit
+    
+- name: demo-2-producer
+  instances: 1
+  no-route: true
+  path: demo-2/demo-2-producer/target/demo-2-producer-0.0.1-SNAPSHOT.jar
+  health-check-type: process
+  services: ["amqp"]
+  env:
+    SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka.cf-demo.com
+    SPRING_CLOUD_STREAM_BINDINGS_MAINFRAME_BINDER: rabbit
+    
+- name: demo-2-consumer
+
+  instances: 3
+  no-route: true
+  path: demo-2/demo-2-consumer/target/demo-2-consumer-0.0.1-SNAPSHOT.jar
+  health-check-type: process
+  services: ["amqp"]
+  env:
+    SPRING_CLOUD_STREAM_BINDINGS_PAAS_BINDER: rabbit

@@ -1,0 +1,19 @@
+---
+applications: 
+- name: demo-1-producer
+  instances: 1
+  no-route: true
+  path: demo-1/demo-1-producer/target/demo-1-producer-0.0.1-SNAPSHOT.jar
+  health-check-type: process
+  services: ["amqp"]
+  env:
+    SPRING_CLOUD_STREAM_BINDINGS_DEMO1_BINDER: rabbit
+
+- name: demo-1-consumer
+  instances: 1
+  no-route: true
+  path: demo-1/demo-1-consumer/target/demo-1-consumer-0.0.1-SNAPSHOT.jar
+  health-check-type: process
+  services: ["amqp"]
+  env:
+    SPRING_CLOUD_STREAM_BINDINGS_DEMO1_BINDER: rabbit
